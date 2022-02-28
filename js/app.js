@@ -39,13 +39,14 @@ const displaySearchResult = (dataArray) => {
     // <div class="col">
     div.innerHTML = `
     <div class="card h-100">
-      <img src="${imageUrl}" class="card-img-top" alt="${element.phone_name}" />
-      <div class="card-body">
-        <h5 class="card-title">${element.phone_name}</h5>
-        <h6 class="fs-6">
-          Brand: ${element.brand}
-        <h6>
-      </div>    
+        <img src="${imageUrl}" class="card-img-top" alt="${element.phone_name}" />
+        <div class="card-body">
+            <h5 class="card-title">${element.phone_name}</h5>
+            <h6 class="fs-6">Brand: ${element.brand}<h6>
+        </div>    
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="button">See Details</button>
+        </div>
     </div>
     `;
     //   </div>
