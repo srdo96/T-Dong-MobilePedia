@@ -4,6 +4,12 @@ const clearSearchBox = () => {
   searchFeild.value = "";
 };
 
+// clear cards
+const clearCards = () => {
+  const cardsContainer = document.getElementById("cards-container");
+  cardsContainer.innerHTML = ``;
+};
+
 // search button function
 const searchBtn = () => {
   const searchValue = document.getElementById("search-box").value;
@@ -18,25 +24,40 @@ const loadMobileData = async (searchText) => {
   try {
     const res = await fetch(url);
     const data = await res.json();
-    displaySearchResult(data.data);
+
+    const notFound = document.getElementById("not-found");
+    const body = document.getElementById("body");
+    if (data.status == true) {
+      clearCards();
+      body.classList.remove("bg-warning", "bg-opacity-25");
+      notFound.classList.add("d-none");
+      displaySearchResult(data.data);
+    } else {
+      clearCards();
+
+      body.classList.add("bg-warning", "bg-opacity-25");
+      const notFoundMsg = document.getElementById("not-Found-msg");
+      notFoundMsg.innerText = `We Couldn't find any matches for "${searchText}".`;
+      notFound.classList.remove("d-none");
+    }
+    console.log(data);
   } catch (error) {
     console.log(error);
   }
 };
-// X SHOULD BE REMOVED
-loadMobileData("iphone");
 
 // display search result in card
 const displaySearchResult = (dataArray) => {
   const cardsContainer = document.getElementById("cards-container");
   // clear cards
-  cardsContainer.innerHTML = ``;
+  clearCards();
+
+  //  obj's array loop
   dataArray.forEach((element) => {
     const imageUrl = element.image;
 
     const div = document.createElement("div");
     div.classList.add("col");
-    // <div class="col">
     div.innerHTML = `
     <div class="card h-100">
         <img src="${imageUrl}" class="card-img-top" alt="${element.phone_name}" />
@@ -49,7 +70,6 @@ const displaySearchResult = (dataArray) => {
         </div>
     </div>
     `;
-    //   </div>
     cardsContainer.appendChild(div);
   });
 };

@@ -9,7 +9,7 @@
     <!-- bootstrap css -->
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css" />
   </head>
-  <body>
+  <body id="body" class="">
     <!-- header start -->
     <header>
       <nav class="navbar navbar-expand-lg bg-primary">
@@ -24,15 +24,15 @@
     </header>
     <!-- main start -->
     <main>
-      <section>
+      <section class="container">
         <!-- search container -->
-        <div class="container input-group my-3">
+        <div class="container input-group my-3 mb-5">
           <!-- search box -->
           <input
             onclick="clearSearchBox()"
             id="search-box"
             type="text"
-            class="form-control text-center"
+            class="form-control text-center bg-light bg-opacity-50"
             placeholder="Type Mobile Name"
           />
 
@@ -47,14 +47,25 @@
           </button>
         </div>
         <!-- not found massage -->
-        <div class="text-center">
-          <p>Not Found</p>
+        <div id="not-found" class="d-flex justify-content-center d-none mt-5">
+          <div class="text-start">
+            <h5>Hmmm...</h5>
+            <p id="not-Found-msg"></p>
+            <h6>Search Help</h6>
+            <ul>
+              <li>Check your search for typos</li>
+              <li>Try a different search term</li>
+              <li>
+                The mobile you're searching for may be not yet on our site
+              </li>
+            </ul>
+          </div>
         </div>
 
         <!-- cards -->
         <div
           id="cards-container"
-          class="row row-cols-1 row-cols-md-3 g-4"
+          class="row row-cols-1 row-cols-md-3 g-4 mt-5"
         ></div>
       </section>
     </main>
