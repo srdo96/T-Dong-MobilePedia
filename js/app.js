@@ -18,7 +18,37 @@ const loadMobileData = async (searchText) => {
   try {
     const res = await fetch(url);
     const data = await res.json();
+    displaySearchResult(data.data);
   } catch (error) {
-    console.err(error);
+    console.log(error);
   }
+};
+// X SHOULD BE REMOVED
+loadMobileData("iphone");
+
+// display search result in card
+const displaySearchResult = (dataArray) => {
+  const cardsContainer = document.getElementById("cards-container");
+  // clear cards
+  cardsContainer.innerHTML = ``;
+  dataArray.forEach((element) => {
+    const imageUrl = element.image;
+
+    const div = document.createElement("div");
+    div.classList.add("col");
+    // <div class="col">
+    div.innerHTML = `
+    <div class="card h-100">
+      <img src="${imageUrl}" class="card-img-top" alt="${element.phone_name}" />
+      <div class="card-body">
+        <h5 class="card-title">${element.phone_name}</h5>
+        <h6 class="fs-6">
+          Brand: ${element.brand}
+        <h6>
+      </div>    
+    </div>
+    `;
+    //   </div>
+    cardsContainer.appendChild(div);
+  });
 };
