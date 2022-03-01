@@ -147,6 +147,37 @@ const detailsCard = (phone) => {
                   </tr>
                 </tbody>
               </table>
+              <br />
+              <p>Others</p>
+              <hr />
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th scope="row">WLAN</th>
+                    <td>${phone.others.WLAN}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Bluetooth</th>
+                    <td>${phone.others.Bluetooth}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">GPS</th>
+                    <td>${phone.others.GPS}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">NFC</th>
+                    <td>${phone.others.NFC}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Radio</th>
+                    <td>${phone.others.Radio}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">USB</th>
+                    <td>${phone.others.USB}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 </div>
   `;
