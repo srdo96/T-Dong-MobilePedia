@@ -76,7 +76,8 @@ const displaySearchResult = (dataArray) => {
             <h6 class="fs-6">Brand: ${element.brand}<h6>
         </div>    
         <div class="d-grid gap-2">
-            <button onclick="seeDetails('${element.slug}')" class="btn btn-primary" type="button">See Details</button>
+            
+            <a onclick="seeDetails('${element.slug}')" class="btn btn-primary" href="#details-card" role="button">See Details</a>
         </div>
     </div>
     `;
