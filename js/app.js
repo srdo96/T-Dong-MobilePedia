@@ -14,7 +14,6 @@ const clear = (id) => {
 const searchBtn = () => {
   const searchValue = document.getElementById("search-box").value;
   loadMobileData(searchValue);
-  //   console.log(searchValue);
 };
 
 // fetch data with async
@@ -33,6 +32,7 @@ const loadMobileData = async (searchText) => {
       notFound.classList.add("d-none");
       displaySearchResult(data.data);
     } else {
+      clear("details-card");
       clear("cards-container");
 
       body.classList.add("bg-warning", "bg-opacity-25");
