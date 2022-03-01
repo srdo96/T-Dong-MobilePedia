@@ -86,7 +86,11 @@ const seeDetails = async (phoneId) => {
 
 // show phone details in details Card
 const detailsCard = (phone) => {
-  console.log("img", phone);
+  // console.log("dfs", phone.others);
+  let releaseDate = phone.releaseDate;
+  if (!phone.releaseDate) {
+    releaseDate = "No Release Date Found!";
+  }
   const sensors = phone.mainFeatures.sensors.join(", ");
   console.log("sen", sensors);
   const card = document.getElementById("details-card");
@@ -100,7 +104,7 @@ const detailsCard = (phone) => {
     class="card-img-top w-75"
     alt="${phone.name}"
   />
-  <div class="card-body">
+  <div id="details-card-body" class="card-body">
               <h5 class="card-title">${phone.name}</h5>
               <br />
               <p>Release</p>
@@ -109,7 +113,7 @@ const detailsCard = (phone) => {
                 <tbody>
                   <tr>
                     <th scope="row">Release Date</th>
-                    <td>${phone.releaseDate}</td>
+                    <td>${releaseDate}</td>
                   </tr>
                 </tbody>
               </table>
@@ -147,39 +151,49 @@ const detailsCard = (phone) => {
                   </tr>
                 </tbody>
               </table>
-              <br />
-              <p>Others</p>
-              <hr />
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <th scope="row">WLAN</th>
-                    <td>${phone.others.WLAN}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Bluetooth</th>
-                    <td>${phone.others.Bluetooth}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">GPS</th>
-                    <td>${phone.others.GPS}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">NFC</th>
-                    <td>${phone.others.NFC}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Radio</th>
-                    <td>${phone.others.Radio}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">USB</th>
-                    <td>${phone.others.USB}</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
 </div>
   `;
   card.appendChild(div);
+  const detailsCardBody = document.getElementById("details-card-body");
+  const otherDiv = document.createElement("div");
+  if (phone.others) {
+    otherDiv.innerHTML = `
+    <br />
+    <p>Others</p>
+    <hr />
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">WLAN</th>
+          <td>${phone.others.WLAN}</td>
+        </tr>
+        <tr>
+          <th scope="row">Bluetooth</th>
+          <td>${phone.others.Bluetooth}</td>
+        </tr>
+        <tr>
+          <th scope="row">GPS</th>
+          <td>${phone.others.GPS}</td>
+        </tr>
+        <tr>
+          <th scope="row">NFC</th>
+          <td>${phone.others.NFC}</td>
+        </tr>
+        <tr>
+          <th scope="row">Radio</th>
+          <td>${phone.others.Radio}</td>
+        </tr>
+        <tr>
+          <th scope="row">USB</th>
+          <td>${phone.others.USB}</td>
+        </tr>
+      </tbody>
+    </table>
+    `;
+    detailsCardBody.appendChild(otherDiv);
+  } else {
+    console.log("else", phone.others);
+    otherDiv.innerHTML = ``;
+  }
 };
