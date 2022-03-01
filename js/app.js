@@ -17,7 +17,7 @@ const searchBtn = () => {
 };
 
 // fetch data with async
-const loadMobileData = async (searchText) => {
+const loadMobileData = async (searchText = "a") => {
   const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
   try {
     const res = await fetch(url);
@@ -41,7 +41,7 @@ const loadMobileData = async (searchText) => {
     console.log(error);
   }
 };
-
+loadMobileData();
 // display search result in card
 const displaySearchResult = (dataArray) => {
   const cardsContainer = document.getElementById("cards-container");
@@ -108,16 +108,8 @@ const detailsCard = (phone) => {
       <div id="details-card-body" class="card-body">              
           <h4 class="card-title">${phone.name}</h4>
           <br />
-          <p>Release</p>
+          <p>${releaseDate}</p>
           <hr />
-          <table class="table">
-              <tbody>
-                  <tr>
-                    <th scope="row">Release Date</th>
-                    <td>${releaseDate}</td>
-                  </tr>
-              </tbody>
-          </table>
           <br />
           <p>Main Features</p>
           <hr />
