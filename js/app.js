@@ -5,8 +5,8 @@ const clearSearchBox = () => {
 };
 
 // clear cards
-const clearCards = () => {
-  const cardsContainer = document.getElementById("cards-container");
+const clear = (id) => {
+  const cardsContainer = document.getElementById(id);
   cardsContainer.innerHTML = ``;
 };
 
@@ -28,12 +28,12 @@ const loadMobileData = async (searchText) => {
     const notFound = document.getElementById("not-found");
     const body = document.getElementById("body");
     if (data.status == true) {
-      clearCards();
+      clear("cards-container");
       body.classList.remove("bg-warning", "bg-opacity-25");
       notFound.classList.add("d-none");
       displaySearchResult(data.data);
     } else {
-      clearCards();
+      clear("cards-container");
 
       body.classList.add("bg-warning", "bg-opacity-25");
       const notFoundMsg = document.getElementById("not-Found-msg");
@@ -48,12 +48,22 @@ const loadMobileData = async (searchText) => {
 
 // display search result in card
 const displaySearchResult = (dataArray) => {
+  console.log(dataArray);
   const cardsContainer = document.getElementById("cards-container");
   // clear cards
-  clearCards();
+  clear("cards-container");
+  clear("details-card");
+  /* const card = document.getElementById("details-card");
+  card.innerHTML = ""; */
 
   //  obj's array loop
-  dataArray.forEach((element) => {
+  for (const element of dataArray) {
+    console.log(dataArray.indexOf(element));
+    // check card Number
+    if (dataArray.indexOf(element) == 20) {
+      break;
+    }
+
     const imageUrl = element.image;
     // console.log(element.slug);
     const div = document.createElement("div");
@@ -71,7 +81,8 @@ const displaySearchResult = (dataArray) => {
     </div>
     `;
     cardsContainer.appendChild(div);
-  });
+    // });
+  }
 };
 
 // show phone details
@@ -94,7 +105,8 @@ const detailsCard = (phone) => {
   const sensors = phone.mainFeatures.sensors.join(", ");
   console.log("sen", sensors);
   const card = document.getElementById("details-card");
-  card.innerHTML = "";
+  // card.innerHTML = "";
+  clear("details-card");
   const div = document.createElement("div");
 
   div.innerHTML = `
