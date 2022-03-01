@@ -86,30 +86,69 @@ const seeDetails = async (phoneId) => {
 
 // show phone details in details Card
 const detailsCard = (phone) => {
-  // console.log("img", phone.image);
+  console.log("img", phone);
+  const sensors = phone.mainFeatures.sensors.join(", ");
+  console.log("sen", sensors);
   const card = document.getElementById("details-card");
+  card.innerHTML = "";
   const div = document.createElement("div");
+
   div.innerHTML = `
-    <div class="card mb-3" style="max-width: 540px">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img src="${phone.image}" class="img-fluid rounded-start" alt="..." />
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">${phone.name}</h5>
-            <p class="card-text">
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-            <p class="card-text">
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </p>
-          </div>
-       </div>
-     </div>
-   </div>
+  <div class="card" style="width: 25rem">
+  <img
+    src="${phone.image}"
+    class="card-img-top w-75"
+    alt="${phone.name}"
+  />
+  <div class="card-body">
+              <h5 class="card-title">${phone.name}</h5>
+              <br />
+              <p>Release</p>
+              <hr />
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th scope="row">Release Date</th>
+                    <td>${phone.releaseDate}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+              <p>Main Features</p>
+              <hr />
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th scope="row">Storage</th>
+                    <td>${phone.mainFeatures.storage}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Display Size</th>
+                    <td>${phone.mainFeatures.displaySize}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Chipset</th>
+                    <td>${phone.mainFeatures.chipSet}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Memory</th>
+                    <td>${phone.mainFeatures.memory}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+              <p>Sensors</p>
+              <hr />
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th scope="row">Sensors</th>
+                    <td>${sensors}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+</div>
   `;
   card.appendChild(div);
 };
