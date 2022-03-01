@@ -18,12 +18,10 @@ const searchBtn = () => {
 
 // fetch data with async
 const loadMobileData = async (searchText) => {
-  console.log(searchText);
   const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
   try {
     const res = await fetch(url);
     const data = await res.json();
-
     const notFound = document.getElementById("not-found");
     const body = document.getElementById("body");
     if (data.status == true) {
@@ -34,13 +32,11 @@ const loadMobileData = async (searchText) => {
     } else {
       clear("details-card");
       clear("cards-container");
-
       body.classList.add("bg-warning", "bg-opacity-25");
       const notFoundMsg = document.getElementById("not-Found-msg");
-      notFoundMsg.innerText = `We Couldn't find any matches for "${searchText}".`;
+      notFoundMsg.innerText = `We Couldn't find any matches for "${searchText}"`;
       notFound.classList.remove("d-none");
     }
-    console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -48,24 +44,19 @@ const loadMobileData = async (searchText) => {
 
 // display search result in card
 const displaySearchResult = (dataArray) => {
-  console.log(dataArray);
   const cardsContainer = document.getElementById("cards-container");
   // clear cards
   clear("cards-container");
   clear("details-card");
-  /* const card = document.getElementById("details-card");
-  card.innerHTML = ""; */
 
   //  obj's array loop
   for (const element of dataArray) {
-    console.log(dataArray.indexOf(element));
     // check card Number
     if (dataArray.indexOf(element) == 20) {
       break;
     }
 
     const imageUrl = element.image;
-    // console.log(element.slug);
     const div = document.createElement("div");
     div.classList.add("col");
     div.innerHTML = `
@@ -75,67 +66,64 @@ const displaySearchResult = (dataArray) => {
             <h5 class="card-title">${element.phone_name}</h5>
             <h6 class="fs-6">Brand: ${element.brand}<h6>
         </div>    
-        <div class="d-grid gap-2">
-            
+        <div class="d-grid gap-2">            
             <a onclick="seeDetails('${element.slug}')" class="btn btn-primary" href="#details-card" role="button">See Details</a>
         </div>
     </div>
     `;
     cardsContainer.appendChild(div);
-    // });
   }
 };
 
 // show phone details
 const seeDetails = async (phoneId) => {
   const phoneUrl = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
-  console.log(phoneUrl);
   const res = await fetch(phoneUrl);
   const data = await res.json();
-  console.log(data);
   detailsCard(data.data);
 };
 
 // show phone details in details Card
 const detailsCard = (phone) => {
-  // console.log("dfs", phone.others);
   let releaseDate = phone.releaseDate;
+
+  // check phone release datae available or not
   if (!phone.releaseDate) {
     releaseDate = "No Release Date Found!";
   }
+  // concat all sensors name by ,
   const sensors = phone.mainFeatures.sensors.join(", ");
-  console.log("sen", sensors);
   const card = document.getElementById("details-card");
-  // card.innerHTML = "";
   clear("details-card");
   const div = document.createElement("div");
 
+  // adding phone details in details card
   div.innerHTML = `
-  <div class="card" style="width: 25rem">
-  <img
-    src="${phone.image}"
-    class="card-img-top w-75"
-    alt="${phone.name}"
-  />
-  <div id="details-card-body" class="card-body">
-              <h5 class="card-title">${phone.name}</h5>
-              <br />
-              <p>Release</p>
-              <hr />
-              <table class="table">
-                <tbody>
+  <div class="card" style="width: 23rem">
+      <img
+        src="${phone.image}"
+        class="card-img-top"
+        alt="${phone.name}"
+      />
+      <div id="details-card-body" class="card-body">              
+          <h4 class="card-title">${phone.name}</h4>
+          <br />
+          <p>Release</p>
+          <hr />
+          <table class="table">
+              <tbody>
                   <tr>
                     <th scope="row">Release Date</th>
                     <td>${releaseDate}</td>
                   </tr>
-                </tbody>
-              </table>
-              <br />
-              <p>Main Features</p>
-              <hr />
-              <table class="table">
-                <tbody>
-                  <tr>
+              </tbody>
+          </table>
+          <br />
+          <p>Main Features</p>
+          <hr />
+          <table class="table">
+              <tbody>
+                 <tr>
                     <th scope="row">Storage</th>
                     <td>${phone.mainFeatures.storage}</td>
                   </tr>
@@ -151,32 +139,36 @@ const detailsCard = (phone) => {
                     <th scope="row">Memory</th>
                     <td>${phone.mainFeatures.memory}</td>
                   </tr>
-                </tbody>
-              </table>
-              <br />
-              <p>Sensors</p>
-              <hr />
-              <table class="table">
-                <tbody>
+              </tbody>
+          </table>
+          <br />
+          <p>Sensors</p>
+          <hr />
+          <table class="table">
+              <tbody>
                   <tr>
                     <th scope="row">Sensors</th>
                     <td>${sensors}</td>
                   </tr>
-                </tbody>
-              </table>
-            </div>
-</div>
-  `;
+              </tbody>
+          </table>
+          <br />
+          <p>Others</p>
+          <hr />
+          <table id="others-table" class="table">      
+          </table>
+      </div>
+  </div>
+`;
   card.appendChild(div);
-  const detailsCardBody = document.getElementById("details-card-body");
-  const otherDiv = document.createElement("div");
+
+  const othersTable = document.getElementById("others-table");
+  const othersTbody = document.createElement("tbody");
+
+  // check others info available or not
   if (phone.others) {
-    otherDiv.innerHTML = `
-    <br />
-    <p>Others</p>
-    <hr />
-    <table class="table">
-      <tbody>
+    // adding phone others info in othersTable
+    othersTable.innerHTML = `    
         <tr>
           <th scope="row">WLAN</th>
           <td>${phone.others.WLAN}</td>
@@ -200,13 +192,15 @@ const detailsCard = (phone) => {
         <tr>
           <th scope="row">USB</th>
           <td>${phone.others.USB}</td>
-        </tr>
-      </tbody>
-    </table>
+        </tr>      
     `;
-    detailsCardBody.appendChild(otherDiv);
+    othersTable.appendChild(othersTbody);
   } else {
-    console.log("else", phone.others);
-    otherDiv.innerHTML = ``;
+    // clear othersTable
+    othersTbody.innerHTML = ``;
+    othersTbody.innerHTML = `
+    <td>No others data available.</td>
+    `;
+    othersTable.appendChild(othersTbody);
   }
 };
